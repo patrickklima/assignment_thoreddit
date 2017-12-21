@@ -14,6 +14,8 @@ models.Message = require('./message');
 models.Post = require('./post');
 models.Comment = require('./comment');
 models.Vote = require('./vote');
+models.UpVote = require('./voteUp');
+models.DownVote = require('./voteDown');
 
 
 module.exports = models;

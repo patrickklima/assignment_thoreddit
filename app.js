@@ -48,9 +48,14 @@ app.use(morganToolkit());
 
 // ROUTING
 // ----------
-var homeRoutes = require('./routes/home-routes');
 
+// Home and Login/out
+var homeRoutes = require('./routes/home-routes');
 app.use('/', homeRoutes);
+
+// User Index and Profiles
+var userRoutes = require('./routes/user-routes');
+app.use('/users', userRoutes);
 
 
 
@@ -58,8 +63,10 @@ app.use('/', homeRoutes);
 // HANDLEBARS TEMPLATES
 // ----------
 const expressHandlebars = require('express-handlebars');
+const helpers = require('./helpers');
 
 const hbs = expressHandlebars.create({
+  helpers: helpers,
   partialsDir: 'views/',
   defaultLayout: 'application', 
   

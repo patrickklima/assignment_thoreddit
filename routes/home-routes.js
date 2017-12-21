@@ -2,20 +2,19 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', (req, res) => {
-  if (req.session) {
-    res.render('home', {username: req.session.username});
+  if (req.session.user) {
+    res.render('home', {username: req.session.user.username});
   } else {
     res.render('home');  
   }
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login/login');
 });
 
 router.post('/login', (req, res) => {
-  req.session.username = req.body.user.username;
-  req.session.email = req.body.user.email;
+  req.session.user = req.body.user;
   res.redirect('/');
   res.end(JSON.stringify(req.session));
 });

@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users as |user|}}
+      <tr>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td><a href="{{userPath user.username}}">View Posts</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

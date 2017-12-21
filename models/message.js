@@ -11,7 +11,7 @@ var MessageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Comment'
   }], 
-  score: [{
+  votes: [{
     type: Schema.Types.ObjectId,
     ref: 'Vote'
   }]

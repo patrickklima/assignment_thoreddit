@@ -11,16 +11,22 @@ const {
   Message,
   Post,
   Comment,
-  Vote
+  Vote,
+  UpVote,
+  DownVote
 } = models;
 
-const NUM_OF_SEEDS = 10;
+const NUM_OF_SEEDS = 5;
+const MAX_COMMENT_DEPTH = 2;
 
-var userSeeds = [];
-var postSeeds = [];
-var commentSeeds = [];
+
 
 var seeds = () => {
+  var userSeeds = [];
+  var postSeeds = [];
+  var commentSeeds = [];
+  var upVoteSeeds = [];
+  var downVoteSeeds = [];
   // ----------------------------------------
   // Create userSeeds
   // ----------------------------------------
@@ -35,19 +41,19 @@ var seeds = () => {
   }
   
   var _makeComments = (commentDepth) => {
-    if (commentDepth < 3) return;
+    if (commentDepth > MAX_COMMENT_DEPTH) return;
     let comments = [];
     for (let i = 0; i < NUM_OF_SEEDS; i++) {
-      comments.push(new Comment({
-        body: faker.lorem.sentences,
+      let newComment = new Comment({
+        body: faker.lorem.sentences(),
         author: userSeeds[Math.round(Math.random() * userSeeds.length)],
         comments: _makeComments(commentDepth + 1) || [],
         score: [],
         depth: commentDepth
-        })
-      );
+      });
+      comments.push(newComment);
+      commentSeeds.push(newComment);
     }
-    commentSeeds.push(comments);
     return comments;
   };
 
@@ -58,11 +64,48 @@ var seeds = () => {
   userSeeds.forEach((user) => {
     for (let i = 0; i < NUM_OF_SEEDS; i++) {
       postSeeds.push( new Post({
-        subject: faker.lorem.words,
-        body: faker.lorem.paragraph,
+        subject: faker.lorem.words(),
+        body: faker.lorem.paragraph(),
         author: user,
         comments: _makeComments(1),
         score: []
+        })
+      );
+    }
+  });
+  
+  // ----------------------------------------
+  // Votes
+  // ----------------------------------------
+  console.log('Creating Votes');
+  userSeeds.forEach((user) => {
+    for (let i = 0; i < NUM_OF_SEEDS; i++) {
+      upVoteSeeds.push(new UpVote({
+        voter: user,
+        message: commentSeeds[
+          Math.round(Math.random() * commentSeeds.length)
+          ]
+        })
+      );
+      upVoteSeeds.push(new UpVote({
+        voter: user,
+        message: commentSeeds[
+          Math.round(Math.random() * postSeeds.length)
+          ]
+        })
+      );
+      downVoteSeeds.push( new DownVote({
+        voter: user,
+        message: commentSeeds[
+          Math.round(Math.random() * commentSeeds.length)
+          ]
+        })
+      );
+      downVoteSeeds.push(new DownVote({
+        voter: user,
+        message: commentSeeds[
+          Math.round(Math.random() * postSeeds.length)
+          ]
         })
       );
     }
@@ -73,16 +116,14 @@ var seeds = () => {
   // Finish
   // ----------------------------------------
   console.log('Saving...');
-  var promises = [];
-  [
-    userSeeds,
-    postSeeds,
-    commentSeeds
-  ].forEach(collection => {
-    collection.forEach(model => {
-      promises.push(model.save());
-    });
-  });
+  const seedsArr = [
+    ...userSeeds,
+    ...postSeeds,
+    ...commentSeeds, 
+    ...upVoteSeeds, 
+    ...downVoteSeeds
+  ];
+  const promises = seedsArr.map(seed => seed.save());
   return Promise.all(promises);
 };
 

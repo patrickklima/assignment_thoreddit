@@ -2,8 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var VoteSchema = new Schema({
-  isUpVote: Boolean,
-  value: Number,
   voter: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -14,6 +12,7 @@ var VoteSchema = new Schema({
   }]
 }, {
   timestamps: true,
+  discriminatorKey: 'kind'
 });
 
 var Vote = mongoose.model('Vote', VoteSchema);

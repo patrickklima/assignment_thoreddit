@@ -3,7 +3,7 @@
 const ViewsHelper = {};
 
 
-ViewsHelper.viewsPath = () => '/views';
+ViewsHelper.postsPath = () => '/posts';
 
 
 module.exports = ViewsHelper;

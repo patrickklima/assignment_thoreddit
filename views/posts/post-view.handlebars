@@ -1,0 +1,10 @@
+<div class="row">
+  {{> posts/_votes-partial messageId=post._id}}
+  <div class="col-md-10">
+    <h2>{{post.subject}}</h2>
+    <p class="author">by: {{post.author.username}}</p>
+    <p>{{post.body}}</p>
+    <hr>
+    {{> posts/_comments-partial comments=post.comments messageId=post._id messageScore=post.score}}
+  </div>
+</div>

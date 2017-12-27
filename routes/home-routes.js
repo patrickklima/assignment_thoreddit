@@ -1,25 +1,40 @@
 var express = require('express');
 var router = express.Router();
+var {User} = require('../models');
 
+// HOME
+// ----------
 router.get('/', (req, res) => {
-  if (req.session.user) {
-    res.render('home', {username: req.session.user.username});
-  } else {
-    res.render('home');  
-  }
+  res.render('home');  
 });
 
+// SHOW LOGIN PAGE
+// ----------
 router.get('/login', (req, res) => {
   res.render('login/login');
 });
 
+// LOG IN USER
+// ----------
 router.post('/login', (req, res) => {
-  req.session.user = req.body.user;
-  res.redirect('/');
-  res.end(JSON.stringify(req.session));
+  User.find({
+    username: req.body.user.username
+  }).then(user => {
+    req.session.currentUser = {
+      username: user.username,
+      email: user.email,
+      id: user._id,
+      _id: user._id
+    };
+    res.redirect('/');
+    res.end(JSON.stringify(req.session));
+  });
 });
 
-router.get('/logout', (req, res) => {});
+
+// LOGOUT 
+// ----------
+// router.get('/logout', (req, res) => {});
 
 router.post('/logout', (req, res) => {
   req.session = null;

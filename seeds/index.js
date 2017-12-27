@@ -82,29 +82,29 @@ var seeds = () => {
     for (let i = 0; i < NUM_OF_SEEDS; i++) {
       upVoteSeeds.push(new UpVote({
         voter: user,
-        message: commentSeeds[
-          Math.round(Math.random() * commentSeeds.length)
+        message: postSeeds[
+          Math.round(Math.random() * postSeeds.length)
           ]
         })
       );
       upVoteSeeds.push(new UpVote({
         voter: user,
         message: commentSeeds[
-          Math.round(Math.random() * postSeeds.length)
+          Math.round(Math.random() * commentSeeds.length)
           ]
         })
       );
       downVoteSeeds.push( new DownVote({
         voter: user,
-        message: commentSeeds[
-          Math.round(Math.random() * commentSeeds.length)
+        message: postSeeds[
+          Math.round(Math.random() * postSeeds.length)
           ]
         })
       );
       downVoteSeeds.push(new DownVote({
         voter: user,
         message: commentSeeds[
-          Math.round(Math.random() * postSeeds.length)
+          Math.round(Math.random() * commentSeeds.length)
           ]
         })
       );

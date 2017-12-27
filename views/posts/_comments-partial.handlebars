@@ -1,0 +1,8 @@
+
+{{#each comments as |comment|}}
+  {{> posts/_votes-partial messageId=comment._id }}
+  <div class="col-md-10">
+    <p>{{comment.body}}</p>
+    {{> posts/_comments-partial comments=comment.comments messageId=comment._id messageScore=comment.score}}
+  </div>
+{{/each}}

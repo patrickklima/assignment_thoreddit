@@ -1,0 +1,22 @@
+<h2>Posts</h2>
+<p></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Subject</th>
+      <th scope="col">Post</th>
+      <th scope="col">Author</th>
+      <th scope="col">Posted At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each posts as |post|}}
+      <tr>
+        <td><a href="{{postPath post._id}}">{{post.subject}}</a></td>
+        <td>{{shortPostBody post.body}}</td>
+        <td><a href="{{userPath post.author.username}}">{{post.author.username}}</a></td>
+        <td>{{mmmddyyy post.createdAt}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

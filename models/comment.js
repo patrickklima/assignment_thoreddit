@@ -9,6 +9,15 @@ var CommentSchema = new Schema({
   discriminatorKey: 'kind'
 });
 
+var autoPopulateComment = function(next) {
+  this.populate('comments');
+  next();
+};
+
+CommentSchema
+  .pre('findOne', autoPopulateComment)
+  .pre('find', autoPopulateComment);
+
 var Comment = Message.discriminator('Comment', CommentSchema);
 
 module.exports = Comment;

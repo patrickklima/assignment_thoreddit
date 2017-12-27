@@ -20,6 +20,16 @@ var MessageSchema = new Schema({
   discriminatorKey: 'kind'
 });
 
+var autoPopulateAuthor = function(next) {
+  this.populate('author');
+  next();
+};
+
+MessageSchema
+  .pre('findOne', autoPopulateAuthor)
+  .pre('find', autoPopulateAuthor);
+  
+
 var Message = mongoose.model('Message', MessageSchema);
 
 module.exports = Message;

@@ -1,0 +1,32 @@
+<h2>User: {{user.username}}</h2>
+<p></p>
+
+<div class="row">
+  <div class="col-xs-12">
+    {{!--<a href="{{userPath user.username}}/edit">--}}
+    {{!--  <button type="button" class="btn btn-primary">Edit</button>--}}
+    {{!--</a>--}}
+    <a href="{{userPath user._id}}?_method=delete" class="text-danger">
+      <button type="button" class="btn btn-danger">Delete</button>
+    </a>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User</th>
+      <td scope="col">Details</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="col">Username</th>
+      <td scope="col">{{user.username}}</td>
+    </tr>
+    <tr>
+      <th scope="col">Email</th>
+      <td scope="col">{{user.email}}</td>
+    </tr>
+  </tbody>
+</table>

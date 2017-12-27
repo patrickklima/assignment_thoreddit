@@ -17,6 +17,7 @@
 
 
       <ul class="nav navbar-nav navbar-right">
+        
         {{#if currentUser }}
           {{!-- Nav Links Dropdown --}}
           <li class="dropdown">
@@ -25,7 +26,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="{{ usersPath }}">Search</a></li>
+              <li><a href="{{ usersPath }}">All Users</a></li>
               <li><a href="{{ userPath currentUser.username }}">My Profile</a></li>
               <li><a href="{{ postsPath }}">My Posts</a></li>
               {{!--<li><a href="{{ likesPath }}">My Likes</a></li>--}}

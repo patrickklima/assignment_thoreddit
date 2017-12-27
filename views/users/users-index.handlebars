@@ -4,6 +4,7 @@
       <th scope="col">Username</th>
       <th scope="col">Email</th>
       <th scope="col">Posts</th>
+      <th scope="col" class="text-danger">Danger!</th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +13,9 @@
         <td>{{user.username}}</td>
         <td>{{user.email}}</td>
         <td><a href="{{userPath user.username}}">View Posts</a></td>
+        <td class="text-danger">
+          <a href="{{userPath user._id}}?_method=delete">Delete User</a>
+        </td>
       </tr>
     {{/each}}
   </tbody>

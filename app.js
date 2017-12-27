@@ -22,6 +22,8 @@ app.use(cookieSession({
 
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  res.locals.currentUser = req.session.currentUser;
+  console.log(res.locals.currentUser);
   next();
 });
 
@@ -46,6 +48,21 @@ const morganToolkit = require('morgan-toolkit')(morgan);
 
 app.use(morganToolkit());
 
+// MONGOOSE
+// ----------
+const mongoose = require('mongoose');
+// const bluebird = require('bluebird');
+// mongoose.promise = bluebird;
+app.use((req, res, next) => {
+  if (mongoose.connection.readyState) {
+    next();
+  } else {
+    require('./mongo')().then(() => next());
+  }
+});
+
+
+
 // ROUTING
 // ----------
 
@@ -57,6 +74,13 @@ app.use('/', homeRoutes);
 var userRoutes = require('./routes/user-routes');
 app.use('/users', userRoutes);
 
+// Post Index and Post Pages
+var postRoutes = require('./routes/post-routes');
+app.use('/posts', postRoutes);
+
+// Vote Routes
+var voteRoutes = require('./routes/vote-routes');
+app.use('/votes', voteRoutes);
 
 
 
